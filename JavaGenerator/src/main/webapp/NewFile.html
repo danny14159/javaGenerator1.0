@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<button onclick="gen()">dddd</button>
+<textarea rows="30" cols="200" id="text"></textarea>
+<textarea rows="30" cols="200" id="text1"></textarea>
+<script type="text/javascript" src="static/js/jquery.min.js"></script>
+<script type="text/javascript">
+function firstCharToUpperCase(str){
+	return str.charAt(0).toUpperCase() + str.substring(1);
+}
+function gen(){
+	var num = 0;
+	var html = $('#text').val();
+	$('#text1').html(html.replace(/#{\s\w+\s}/g,function(word){
+		console.log(word);
+		var len = word.length;
+		var sub = word.substring(3,len-2).split('_');
+		for(var i = 1;i<sub.length;i++){
+			sub[i] = firstCharToUpperCase(sub[i]);
+			num++;
+		}
+		return '#{ '+sub.join("")+' }';
+	}));
+	alert($('#text').val().length == $('#text1').val().length+num)
+}
+</script>
+</body>
+</html>

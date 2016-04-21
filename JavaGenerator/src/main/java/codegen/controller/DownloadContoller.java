@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  */
 @Controller
-@RequestMapping("/down")
 public class DownloadContoller{
        
 	@RequestMapping("/down")

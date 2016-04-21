@@ -17,11 +17,6 @@ public class SampleController extends SpringBootServletInitializer{
 		return application.sources(SampleController.class);
 	}
 
-	@RequestMapping("/")
-	public String home(Model model) {
-		return "index";
-	}
-
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(SampleController.class, args);
 	}

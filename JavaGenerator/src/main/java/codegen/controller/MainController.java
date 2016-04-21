@@ -18,15 +18,16 @@ public class MainController{
        
 	DbHelper db = new DbHelper();
 	
-	public String service(@ModelAttribute GenParam genParam, HttpServletResponse response,Model model) {
+	@RequestMapping
+	public String service(@ModelAttribute("g") GenParam genParam, HttpServletResponse response,Model model) {
 		try{
 		String url = "jdbc:mysql://"+genParam.getUrl_host()+":"+genParam.getUrl_port()+"/"+genParam.getUrl_db()+"?characterEncoding=utf8";
 		if(Strings.isEmpty(genParam.getUrl_host())){
-			return "redirect:/";
+			return "index";
 		}
 		
 		db.setUrl(url);
-		db.setPassword(genParam.getPassword());
+		db.setUsername(genParam.getUsername());
 		db.setPassword(genParam.getPassword());
 		
 /*		request.setAttribute("exportPath", exportPath);
@@ -41,21 +42,22 @@ public class MainController{
 		request.setAttribute("className", className);
 		request.setAttribute("url_db", url_db);*/
 		
-		if(Strings.isNotBlank(genParam.getClassName())){
+		if(Strings.isBlank(genParam.getClassName())){
 			genParam .setClassName(SystemUtils.getClassNameFromTableName(genParam.getTable(), "t"));
 		}
 		
-		if(Strings.isNotBlank(genParam.getDesktop())){
-			model.addAttribute("exportPath", SystemUtils.getDesktopPath());
+		if(Strings.isBlank(genParam.getDesktop())){
+			genParam.setExportPath(SystemUtils.getDesktopPath());
 		}
 		
 		model.addAttribute("tables", db.getTables());
+		model.addAttribute("g", genParam);
+		
 		if(Strings.isNotBlank(genParam.getTable())){
 			model.addAttribute("columns", db.getColumns(genParam.getTable()));
 		}
 		
 		} catch (Exception e) {
-			e.printStackTrace();
 			model.addAttribute("exception", e.getMessage());
 		}
 		return "index";

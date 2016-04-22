@@ -81,12 +81,13 @@ s{color:red;font-weight: bold;text-decoration: none;margin: 3px;}
 	<div class="row">
 		<button type="button" class="btn btn-warning btn-xs" onclick="generateBean()">生成java bean</button>
 		<button type="button" class="btn btn-danger btn-xs" onclick="generateDao();">生成dao</button>
+		<button type="button" class="btn btn-danger btn-xs" onclick="generateController();">生成Controller</button>
 		<!-- <button type="button" class="btn btn-default btn-xs" onclick="generateDao();">生成controller</button> -->
 		<button type="button" class="btn btn-info btn-xs" onclick="genInsertPage()">生成添加页面</button>
 		<button type="button" class="btn btn-info btn-xs" onclick="generateListPage()">生成查询页面</button>
 		<button type="button" class="btn btn-info btn-xs">生成修改页面</button>
-		<button type="button" class="btn btn-default btn-xs">生成全套</button>
 		<button type="button" class="btn btn-default btn-xs" onclick="geniBatisXml();">生成ibatis XML文件</button>
+		<button type="button" class="btn btn-default btn-xs">生成全套</button>
 	</div>
 
 	<table id="tb_props" class="table table-bordered table-striped">
@@ -237,9 +238,9 @@ function exportFile(pkg,name,filetype,text,outpath){
 	$.post('/down',{
 		path:filepath,
 		content:t
-	},function(){
-		alert('成功');
-	},'json');
+	},function(data){
+		alert(data);
+	},'text');
 	
 	return;
 	
@@ -352,23 +353,20 @@ function generateDao(){
 	t+='\n}';
 	console.log(t);
 	
-	exportFile(gettext('package_')+'.dao', gettext('className'), 'java', t,gettext('exportPath'));
+	exportFile(gettext('package_')+'.dao', gettext('className')+'Dao', 'java', t,gettext('exportPath'));
 	
 	return t;
 }
-var topBody='&lt;%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%&gt;\n\
-&lt;%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%&gt;\n\
-&lt;%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>\n\
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">\n\
-<html>\n\
-<head>\n\
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\n\
-<title>列表页面</title>\n\
-</head>\n\
-<body>\n',
-bottomBody='</body>\n\
-</html>';
+
+function generateController(){
+	$.post('/tpl/controller',function(data){
 		
+		console.log(data);
+		exportFile(gettext('package_')+'.controller', gettext('className')+'Controller', 'java', data ,gettext('exportPath'));
+	});
+	
+}
+
 function toggleSelectAll(self,$sel){
 	if(self.checked)
 		$sel.each(function(){

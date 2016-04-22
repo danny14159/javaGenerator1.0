@@ -25,12 +25,6 @@ public class GenParam {
 	
 	private String ignorePrefix;
 	
-	public String getIgnorePrefix() {
-		return ignorePrefix;
-	}
-	public void setIgnorePrefix(String ignorePrefix) {
-		this.ignorePrefix = ignorePrefix;
-	}
 	/**
 	 * 导出地址
 	 */
@@ -50,18 +44,12 @@ public class GenParam {
 	 */
 	private String moduleTitle;
 	
-	public String getRoutePath() {
-		return routePath;
-	}
-	public void setRoutePath(String routePath) {
-		this.routePath = routePath;
-	}
-	public String getModuleTitle() {
-		return moduleTitle;
-	}
-	public void setModuleTitle(String moduleTitle) {
-		this.moduleTitle = moduleTitle;
-	}
+	
+	private String className;
+	private String url_host;
+	private String url_port;
+	private String url_db;
+	private String pk;
 	public String getTable() {
 		return table;
 	}
@@ -92,6 +80,12 @@ public class GenParam {
 	public void setDesktop(String desktop) {
 		this.desktop = desktop;
 	}
+	public String getIgnorePrefix() {
+		return ignorePrefix;
+	}
+	public void setIgnorePrefix(String ignorePrefix) {
+		this.ignorePrefix = ignorePrefix;
+	}
 	public String getExportPath() {
 		return exportPath;
 	}
@@ -103,6 +97,18 @@ public class GenParam {
 	}
 	public void setPackage_(String package_) {
 		this.package_ = package_;
+	}
+	public String getRoutePath() {
+		return routePath;
+	}
+	public void setRoutePath(String routePath) {
+		this.routePath = routePath;
+	}
+	public String getModuleTitle() {
+		return moduleTitle;
+	}
+	public void setModuleTitle(String moduleTitle) {
+		this.moduleTitle = moduleTitle;
 	}
 	public String getClassName() {
 		return className;
@@ -134,9 +140,4 @@ public class GenParam {
 	public void setPk(String pk) {
 		this.pk = pk;
 	}
-	private String className;
-	private String url_host;
-	private String url_port;
-	private String url_db;
-	private String pk;
 }

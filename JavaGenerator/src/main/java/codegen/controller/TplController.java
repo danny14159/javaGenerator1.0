@@ -58,4 +58,10 @@ public class TplController {
 		
 		return "tpl/frame";
 	}
+	
+	@RequestMapping("/controller")
+	public String controller(){
+		
+		return "tpl/controller";
+	}
 }

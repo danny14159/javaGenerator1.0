@@ -7,12 +7,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>添加</title>
 <link href="/static/css/bootstrap.min.css" rel="stylesheet"/>
+<style type="text/css">
+.error{color:red;}
+</style>
 </head>
 <body>
 
 <h1 class="page-header">${remarks } - 新增</h1>
 
-<form class="form-horizontal">
+<form form-ajax class="form-horizontal" id="main-form" action="/${genparam.routePath }/insert">
 
 <c:forEach items="${columns }" var="i">
   <div class="form-group">
@@ -22,7 +25,7 @@
     	${i.columnName }
     </c:if></label>
     <div class="col-sm-3">
-      <input type="text" class="form-control" id="input${i.columnName }" placeholder="${i.columnComment }">
+      <input type="text" class="form-control required" id="input${i.columnName }" placeholder="${i.columnComment }">
     </div>
   </div>
   </c:forEach>
@@ -36,5 +39,11 @@
 
 
 <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="/static/js/messages_zh.min.js"></script>
+<script type="text/javascript" src="/static/js/form-ajax.js"></script>
+<script type="text/javascript">
+
+</script>
 </body>
 </html>

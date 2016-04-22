@@ -51,7 +51,7 @@ s{color:red;font-weight: bold;text-decoration: none;margin: 3px;}
 	</div>
 	<div class="row">
 		<div class="form-group">
-			<label><s></s>路由路径:</label>/<input type="text" name="routePath" value="${routePath }" class="required" placeholder="控制器请求的路由路径"/>
+			<label><s></s>路由路径:</label>/<input type="text" name="routePath" value="${g.routePath }" class="required" placeholder="控制器请求的路由路径"/>
 		</div>
 		<div class="form-group">
 			<label><s>*</s>导出地址:</label><input type="text" name="exportPath" value="${g.exportPath }" class="required"/><button onclick="getDesktopPath()" class="btn btn-primary btn-xs">桌面</button>
@@ -60,6 +60,9 @@ s{color:red;font-weight: bold;text-decoration: none;margin: 3px;}
 	<div class="row">
 		<div class="form-group">
 			<label><s>*</s>主键:</label><input type="text" name="pk" value="${g.pk }" class="required"/>
+		</div>
+		<div class="form-group">
+			<label>忽略表前缀:</label><input type="text" name="ignorePrefix" value="${g.ignorePrefix }" class="required" placeholder="表名的前缀"/>
 		</div>
 	</div>
 

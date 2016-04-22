@@ -19,7 +19,7 @@ import codegen.utils.SystemUtils;
 @Controller
 public class MainController{
 	
-	public static final String SES_PARAM="ses.param";
+	public static final String SES_PARAM="genparam";
 	
 	public static GenParam getParam(HttpServletRequest request){
 		
@@ -40,11 +40,14 @@ public class MainController{
 		db.initParam(genParam);
 		
 		//if(Strings.isBlank(genParam.getClassName())){
-			genParam .setClassName(SystemUtils.getClassNameFromTableName(genParam.getTable(), "t"));
+			genParam .setClassName(SystemUtils.getClassNameFromTableName(genParam.getTable(), genParam.getIgnorePrefix()));
 		//}
 		
 		if(Strings.isBlank(genParam.getDesktop())){
 			genParam.setExportPath(SystemUtils.getDesktopPath());
+		}
+		if(Strings.isBlank(genParam.getRoutePath())){
+			genParam.setRoutePath(genParam.getClassName().toLowerCase());
 		}
 		
 		model.addAttribute("tables", db.getTables());

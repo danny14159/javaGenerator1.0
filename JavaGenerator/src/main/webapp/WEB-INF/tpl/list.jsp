@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>列表页面</title>
+<title>查看</title>
+<link href="/static/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
 <body>
 <form class="form-inline">
@@ -13,36 +14,23 @@
 </form><table class="table table-striped">
 <tr>
 	<th><input type="checkbox" onchange="toggleSelectAll(this,$('[name=selectRow]'));"/></th>
-	<th>资产</th>
-	<th>name</th>
-	<th>model_no</th>
-	<th>buying_price</th>
-	<th>curr_state</th>
-	<th>user</th>
-	<th>store_location</th>
-	<th>category_id</th>
-	<th>responsive_people</th>
-	<th>other_info</th>
-	<th>using_expire</th>
-	<th>department_id</th>
+	
+	<c:forEach items="${columns }" var="i">
+	<th><c:if test="${!empty i.columnComment }">${i.columnComment }</c:if><c:if test="${empty i.columnComment }">${i.columnName }</c:if></th>
+	</c:forEach>
+	
 </tr>
-	<c:forEach items="${pager.list }" var="i">
+	&lt;c:forEach items="&#36;{pager.list }" var="i">
 <tr>
 <td><input type="checkbox" checked="checked" name="selectRow"/></td>
-	<td><c:out value="${i.id}"></c:out></td>
-	<td><c:out value="${i.name}"></c:out></td>
-	<td><c:out value="${i.model_no}"></c:out></td>
-	<td><c:out value="${i.buying_price}"></c:out></td>
-	<td><c:out value="${i.curr_state}"></c:out></td>
-	<td><c:out value="${i.user}"></c:out></td>
-	<td><c:out value="${i.store_location}"></c:out></td>
-	<td><c:out value="${i.category_id}"></c:out></td>
-	<td><c:out value="${i.responsive_people}"></c:out></td>
-	<td><c:out value="${i.other_info}"></c:out></td>
-	<td><fmt:formatDate value="${i.using_expire}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-	<td><c:out value="${i.department_id}"></c:out></td>
+	<c:forEach items="${columns }" var="i">
+	<td>
+		<c:if test="${i.javaType == 'java.util.Date' }">&lt;fmt:formatDate value="&#36;{i.${i.columnName }}" pattern="yyyy-MM-dd HH:mm:ss"/></c:if>
+		<c:if test="${i.javaType != 'java.util.Date' }">&lt;c:out value="&#36;{i.${i.columnName }}">&lt;/c:out></c:if>
+	</td>
+	</c:forEach>
 </tr>
-</c:forEach>
+&lt;/c:forEach>
 </table>
 <div id="pager"></div>
 <script type="text/javascript" src="/static/js/jquery.min.js"></script>

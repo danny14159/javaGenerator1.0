@@ -79,7 +79,7 @@ s{color:red;font-weight: bold;text-decoration: none;margin: 3px;}
 		<button type="button" class="btn btn-warning btn-xs" onclick="generateBean()">生成java bean</button>
 		<button type="button" class="btn btn-danger btn-xs" onclick="generateDao();">生成dao</button>
 		<!-- <button type="button" class="btn btn-default btn-xs" onclick="generateDao();">生成controller</button> -->
-		<button type="button" class="btn btn-info btn-xs">生成添加页面</button>
+		<button type="button" class="btn btn-info btn-xs" onclick="genInsertPage()">生成添加页面</button>
 		<button type="button" class="btn btn-info btn-xs" onclick="generateListPage()">生成查询页面</button>
 		<button type="button" class="btn btn-info btn-xs">生成修改页面</button>
 		<button type="button" class="btn btn-default btn-xs">生成全套</button>
@@ -379,72 +379,22 @@ function toggleSelectAll(self,$sel){
 }
 
 function generateListPage(){
-	var list = retrievePojoObject(4),findBy = retrievePojoObject(5);
-	var t = topBody;
-	t += '<form class="form-inline">\n';
 	
-	for(var i in findBy){
-  t+='<div class="form-group">\n\
-    <label for="">'+findBy[i][3]+'：</label>\n\
-    <input type="text" class="form-control" name="'+findBy[i][0]+'" placeholder="" value="&amp;{data.'+findBy[i][0]+'}">\n\
-  </div>\n';
+	$.get('tpl/list',function(data){
+		data = data.replace(/&lt;/g,'<');	
+		data = data.replace(/&#36;/g,'$');	
+	
+		console.log(data);		
+		exportFile(gettext('package_')+'.front.'+firstCharToLowerCase(gettext('className')), 'list','jsp', data,gettext('exportPath'));
+	},'html');
+	
 }
-  
-  t+='<button type="submit" class="btn btn-default">查找</button>\n\
-</form>';
-	t += '<table class="table table-striped">\n\
-<tr>\n\t<th><input type="checkbox" onchange="toggleSelectAll(this,$(\'[name=selectRow]\'));"/></th>\n';
-		for(var i in list){
-			t+= '\t<th>'+(list[i][3]||list[i][0])+'</th>\n';
-		}
-	t+='</tr>\n\
-	&lt;c:forEach items="&amp;{pager.list }" var="i">\n\
-<tr>\n<td><input type="checkbox" checked="checked" name="selectRow"/></td>\n';
-		for(var i in list){
-			t+='\t<td>';
-			if(list[i][2] == "java.util.Date"){
-				t+='&lt;fmt:formatDate value="&amp;{i.'+list[i][0]+'}" pattern="yyyy-MM-dd HH:mm:ss"/>';
-			}
-			else{
-				t+='&lt;c:out value="'+'&amp;{i.'+list[i][0]+'}'+'">&lt;/c:out>';
-			}
-			t+='</td>\n';
-		}
-		t+='</tr>\n\
-&lt;/c:forEach>\n\
-</table>\n\
-<div id="pager"></div>\n\
-<script type="text/javascript" src="/static/js/jquery.min.js">&lt;/script&gt;\n\
-<script type="text/javascript" src="/static/laypage/laypage.js">&lt;/script&gt;\n\
-<script type="text/javascript">\n\
-$(function(){\n\
-	laypage({\n\
-	    cont: "pager",\n\
-	    pages: "&amp;{pager.pageCount}", \n\
-	    curr: "&amp;{pager.pageNumber}", \n\
-	    jump: function(e, first){ \n\
-	        if(!first){ \n\
-	            location.href = "?ps=&amp;{pager.pageSize}&amp;pn="+e.curr;\n\
-	        }\n\
-	    }\n\
-	});\n\
-})\n\
-function toggleSelectAll(self,$sel){\n\
-	if(self.checked)\n\
-		$sel.each(function(){\n\
-			if(!this.checked) $(this).click();\n\
-		});\n\
-	else{\n\
-		$sel.each(function(){\n\
-			if(this.checked) $(this).click();\n\
-		});\n\
-	}\n\
-}\n&lt;/script&gt;\n';
-	
-	t+=bottomBody;
-	console.log(t);
-	
-	exportFile(gettext('package_')+'.front.'+firstCharToLowerCase(gettext('className')), 'list','jsp', t,gettext('exportPath'));
+
+function genInsertPage(){
+	$.get('tpl/insert',function(data){
+		console.log(data);		
+		exportFile(gettext('package_')+'.front.'+firstCharToLowerCase(gettext('className')), 'insert','jsp', data,gettext('exportPath'));
+	},'html');
 }
 
 function geniBatisXml(){

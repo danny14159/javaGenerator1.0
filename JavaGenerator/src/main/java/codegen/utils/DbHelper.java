@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import codegen.bean.GenParam;
 import codegen.utils.bean.DataBaseColumn;
 import codegen.utils.bean.DataBaseTable;
 
@@ -146,5 +147,13 @@ public class DbHelper {
 			default: result = "String";
 		}
 		return result;
+	}
+	
+	public void initParam(GenParam genParam){
+		String url = "jdbc:mysql://"+genParam.getUrl_host()+":"+genParam.getUrl_port()+"/"+genParam.getUrl_db()+"?characterEncoding=utf8";
+	
+		this.url = url;
+		this.username = genParam.getUsername();
+		this.password = genParam.getPassword();
 	}
 }

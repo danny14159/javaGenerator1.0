@@ -23,6 +23,11 @@ public class SystemUtils {
 	 */
 	public static String getClassNameFromTableName(String tableName,String ignorePrefix){
 		
+		if(Strings.isBlank(tableName)){
+			
+			return "";
+		}
+		
 		String[] parts = tableName.split("_");
 		
 		int cursor = 0;

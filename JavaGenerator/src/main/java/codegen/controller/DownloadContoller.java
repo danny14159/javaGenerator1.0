@@ -19,6 +19,7 @@ public class DownloadContoller{
 		
         try {
 			FileUtils.write(new File(path), content, "utf-8");
+			System.out.println("写入文件"+path);
 			response.getWriter().print(true);
 		} catch (IOException e) {
 			e.printStackTrace();

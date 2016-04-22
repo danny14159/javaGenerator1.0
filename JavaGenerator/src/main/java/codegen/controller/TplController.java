@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import codegen.bean.GenParam;
 import codegen.utils.DbHelper;
 import codegen.utils.Strings;
+import codegen.utils.bean.DataBaseTable;
 
 @Controller
 @RequestMapping("/tpl")
@@ -25,9 +26,13 @@ public class TplController {
 		GenParam param = MainController.getParam(request);
 		helper.initParam(param);
 		
+		
 		if(Strings.isNotBlank(param.getTable())){
 			
-			model.addAttribute("columns", helper.getColumns(param.getTable()));
+			DataBaseTable table= helper.getTable(param.getTable());
+			model.addAttribute("columns", table.getColumnList());
+			model.addAttribute("remarks", table.getTableComment());
+			
 		}
 		
 		return "tpl/insert";
@@ -40,7 +45,9 @@ public class TplController {
 		
 		if(Strings.isNotBlank(param.getTable())){
 			
-			model.addAttribute("columns", helper.getColumns(param.getTable()));
+			DataBaseTable table= helper.getTable(param.getTable());
+			model.addAttribute("columns", table.getColumnList());
+			model.addAttribute("remarks", table.getTableComment());
 		}
 		
 		return "tpl/list";

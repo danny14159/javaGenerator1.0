@@ -104,6 +104,29 @@ public class DbHelper {
         closeConnection(con);
         return list;
 	}
+	/**
+	 * 获取数据库中表的信息
+	 * @throws Exception 
+	 */
+	public DataBaseTable getTable(String tableName) throws Exception{
+		DataBaseTable table = new DataBaseTable();
+		table.setTableName(tableName);
+		
+		Connection con = getConnection();
+		DatabaseMetaData databaseMetaData = con.getMetaData();
+		
+		//获取所有表
+		ResultSet rs = databaseMetaData.getTables(con.getCatalog(), "%", tableName, new String[]{"TABLE"});
+		
+		while(rs.next()){
+			table.setTableComment(rs.getString("REMARKS"));
+		}
+		
+		table.setColumnList(getColumns(tableName));
+		
+		closeConnection(con);
+		return table;
+	}
 	
 	/**获取列信息
 	 * @param tableName
@@ -150,7 +173,7 @@ public class DbHelper {
 	}
 	
 	public void initParam(GenParam genParam){
-		String url = "jdbc:mysql://"+genParam.getUrl_host()+":"+genParam.getUrl_port()+"/"+genParam.getUrl_db()+"?characterEncoding=utf8";
+		String url = "jdbc:mysql://"+genParam.getUrl_host()+":"+genParam.getUrl_port()+"/"+genParam.getUrl_db()+"?characterEncoding=utf8&useInformationSchema=true";
 	
 		this.url = url;
 		this.username = genParam.getUsername();

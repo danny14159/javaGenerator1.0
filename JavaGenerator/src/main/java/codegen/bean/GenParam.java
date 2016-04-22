@@ -35,7 +35,33 @@ public class GenParam {
 	 * 导出地址
 	 */
 	private String exportPath;
+	/**
+	 * 基础包名
+	 */
 	private String package_;
+	
+	/**
+	 * 路由路径
+	 */
+	private String routePath;
+	
+	/**
+	 * 模块名
+	 */
+	private String moduleTitle;
+	
+	public String getRoutePath() {
+		return routePath;
+	}
+	public void setRoutePath(String routePath) {
+		this.routePath = routePath;
+	}
+	public String getModuleTitle() {
+		return moduleTitle;
+	}
+	public void setModuleTitle(String moduleTitle) {
+		this.moduleTitle = moduleTitle;
+	}
 	public String getTable() {
 		return table;
 	}

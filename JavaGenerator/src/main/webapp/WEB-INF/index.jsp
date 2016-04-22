@@ -31,7 +31,7 @@ s{color:red;font-weight: bold;text-decoration: none;margin: 3px;}
 		jdbc:mysql://
 		<input type="text" name="url_host" placeholder="host" style="width:300px" value="${g.url_host }"/>:
 		<input type="text" name="url_port" placeholder="port" style="width:300px" value="${g.url_port }"/>/
-		<input type="text" name="url_db" placeholder="database" style="width:300px" value="${g.url_db }"/>?characterEncoding=utf8
+		<input type="text" name="url_db" placeholder="database" style="width:300px" value="${g.url_db }"/>?characterEncoding=utf8&useInformationSchema=true
 	</div>
 	<div class="row">
 		<div class="form-group">

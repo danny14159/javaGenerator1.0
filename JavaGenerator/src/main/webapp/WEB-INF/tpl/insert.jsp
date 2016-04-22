@@ -10,6 +10,8 @@
 </head>
 <body>
 
+<h1 class="page-header">${remarks } - 新增</h1>
+
 <form class="form-horizontal">
 
 <c:forEach items="${columns }" var="i">

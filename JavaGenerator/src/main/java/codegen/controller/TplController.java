@@ -45,4 +45,10 @@ public class TplController {
 		
 		return "tpl/list";
 	}
+	
+	@RequestMapping("/frame")
+	public String frame(){
+		
+		return "tpl/frame";
+	}
 }

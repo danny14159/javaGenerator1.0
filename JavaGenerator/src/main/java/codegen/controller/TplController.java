@@ -54,7 +54,7 @@ public class TplController {
 	}
 	
 	@RequestMapping("/frame")
-	public String frame(){
+	public String frame(Model model){
 		
 		return "tpl/frame";
 	}
@@ -63,5 +63,11 @@ public class TplController {
 	public String controller(){
 		
 		return "tpl/controller";
+	}
+	
+	@RequestMapping("/login")
+	public String loginPage(){
+		
+		return "tpl/login";
 	}
 }

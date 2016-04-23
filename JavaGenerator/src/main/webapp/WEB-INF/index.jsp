@@ -318,7 +318,7 @@ function generateBean(){
 	for(var p in arr){
 		t+="\n\t/**\n\t * "+arr[p][3]+"\n\t */\n";
 		if(arr[p][2] == 'java.util.Date'){
-			t+='\t@org.springframework.format.annotation.DateTimeFormat(pattern="yyyy-dd-MM HH:mm:ss")\n'
+			t+='\t@org.springframework.format.annotation.DateTimeFormat(pattern="yyyy-MM-dd")\n'
 		}
 		t+="\tprivate "+arr[p][2]+' '+arr[p][0]+';\n';
 	}

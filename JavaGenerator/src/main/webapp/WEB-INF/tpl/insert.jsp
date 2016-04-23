@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%&gt;
+&lt;%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,17 +22,24 @@
 <form form-ajax class="form-horizontal" id="main-form" action="/${genparam.routePath }/insert">
 
 <c:forEach items="${columns }" var="i">
+<div class="col-sm-6">
   <div class="form-group">
-    <label for="input${i.columnName }" class="col-sm-2 control-label"><c:if test="${!empty i.columnComment }">
+    <label for="input${i.columnName }" class="col-sm-4 control-label"><c:if test="${!empty i.columnComment }">
     	${i.columnComment }
     </c:if><c:if test="${empty i.columnComment }">
     	${i.columnName }
     </c:if></label>
-    <div class="col-sm-3">
-      <input type="text" class="form-control required" id="input${i.columnName }" placeholder="${i.columnComment }">
+    <div class="col-sm-6">
+    <c:if test="${i.javaType == 'java.util.Date' }">
+      <input type="text" class="form-control required laydate-icon" id="input${i.columnName }" placeholder="${i.columnComment }" name="${i.columnName }" onclick="laydate()">
+   </c:if>
+   <c:if test="${i.javaType != 'java.util.Date' }">
+      <input type="text" class="form-control required" id="input${i.columnName }" placeholder="${i.columnComment }" name="${i.columnName }">
+    </c:if>
     </div>
   </div>
-  </c:forEach>
+  </div>
+ </c:forEach>
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <button type="submit" class="btn btn-primary btn-sm">提交</button>
@@ -42,6 +53,7 @@
 <script type="text/javascript" src="/static/js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="/static/js/messages_zh.min.js"></script>
 <script type="text/javascript" src="/static/js/form-ajax.js"></script>
+<script type="text/javascript" src="/static/laydate/laydate.js"></script>
 <script type="text/javascript">
 
 </script>

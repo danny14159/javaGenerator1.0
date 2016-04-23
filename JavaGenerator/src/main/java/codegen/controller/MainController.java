@@ -46,9 +46,8 @@ public class MainController{
 		if(Strings.isBlank(genParam.getDesktop())){
 			genParam.setExportPath(SystemUtils.getDesktopPath());
 		}
-		if(Strings.isBlank(genParam.getRoutePath())){
-			genParam.setRoutePath(genParam.getClassName().toLowerCase());
-		}
+			
+		genParam.setRoutePath(genParam.getClassName().toLowerCase());
 		
 		model.addAttribute("tables", db.getTables());
 		model.addAttribute("g", genParam);

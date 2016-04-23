@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+&lt;%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%&gt;
+&lt;%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -21,9 +25,9 @@
 	<c:forEach items="${columns }" var="i">
 	<th><c:if test="${!empty i.columnComment }">${i.columnComment }</c:if><c:if test="${empty i.columnComment }">${i.columnName }</c:if></th>
 	</c:forEach>
-	
+	<th>操作</th>
 </tr>
-	&lt;c:forEach items="&#36;{pager.list }" var="i">
+	&lt;c:forEach items="&#36;{data }" var="i">
 <tr>
 <td><input type="checkbox" checked="checked" name="selectRow"/></td>
 	<c:forEach items="${columns }" var="i">
@@ -32,6 +36,7 @@
 		<c:if test="${i.javaType != 'java.util.Date' }">&lt;c:out value="&#36;{i.${i.columnName }}">&lt;/c:out></c:if>
 	</td>
 	</c:forEach>
+	<td><button class="btn btn-xs btn-link" onclick="del(&#36;{i.id})">删除</button></td>
 </tr>
 &lt;/c:forEach>
 </table>
@@ -42,11 +47,11 @@
 $(function(){
 	laypage({
 	    cont: "pager",
-	    pages: "${pager.pageCount}", 
-	    curr: "${pager.pageNumber}", 
+	    pages: "&#36;{pager.pageCount}", 
+	    curr: "&#36;{pager.pageNumber}", 
 	    jump: function(e, first){ 
 	        if(!first){ 
-	            location.href = "?ps=${pager.pageSize}$pn="+e.curr;
+	            location.href = "?ps=&#36;{pager.pageSize}&pn="+e.curr;
 	        }
 	    }
 	});
@@ -61,6 +66,20 @@ function toggleSelectAll(self,$sel){
 			if(this.checked) $(this).click();
 		});
 	}
+}
+
+function del(id){
+	if(confirm('确认删除此记录？'))
+	$.post('/${genparam.routePath }/del',{
+		id:id
+	},function(data){
+		if(data){
+			alert('操作成功');location.reload();
+		}
+		else{
+			alert('操作失败')
+		}
+	},'json');
 }
 </script>
 </body>

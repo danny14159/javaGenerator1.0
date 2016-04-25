@@ -87,7 +87,7 @@ s{color:red;font-weight: bold;text-decoration: none;margin: 3px;}
 		<button type="button" class="btn btn-info btn-xs" onclick="generateListPage()">生成查询页面</button>
 		<button type="button" class="btn btn-info btn-xs">生成修改页面</button>
 		<button type="button" class="btn btn-default btn-xs" onclick="geniBatisXml();">生成ibatis XML文件</button>
-		<button type="button" class="btn btn-default btn-xs">生成全套</button>
+		<button type="button" class="btn btn-default btn-xs" onclick="genAll();">生成全套</button>
 	</div>
 
 	<table id="tb_props" class="table table-bordered table-striped">
@@ -239,37 +239,12 @@ function exportFile(pkg,name,filetype,text,outpath){
 		path:filepath,
 		content:t
 	},function(data){
-		alert(data);
+		$('.text-danger').append(data);
+		//alert(data);
 	},'text');
 	
 	return;
 	
-	/* var fso = new ActiveXObject("Scripting.FileSystemObject");   //加载控件
-	var utf8Enc = new ActiveXObject("Utf8Lib.Utf8Enc"); //编码控件
-
-	var _path="";
-		for(var i in folders){
-			_path+=folders[i]+'\\';
-			try{ fso.CreateFolder(_path);
-			}catch(e){console.log(e);}
-		}
-	
-	var dstFile; 
-	try{
-		dstFile =  fso.OpenTextFile(filepath, 2, true);
-	}
-	catch(e){
-		console.log(e,'opening failed!attempt creating.');dstFile = fso.CreateTextFile(filepath,true); //true for overwrite
-	}
-	for(var i = 0;i<t.length;i++){
-		var ch=t.charAt(i);
-		if(ch=='\t')dstFile.Write('    ');
-		else if(ch=='\n')dstFile.WriteBlankLines(1);
-		else dstFile.BinaryWrite(utf8Enc.UnicodeToUtf8(strContent));
-		
-	}
-	console.log('success:filepath=',filepath);
-	dstFile.Close(); */
 }
 function getDesktopPath(){
 	$('input[name=desktop]').val('true');
@@ -334,13 +309,13 @@ function generateBean(){
 	return t;
 }
 function generateDao(){
-	var t = "package "+gettext('package_')+'.dao;\n';
+	var t = "package "+gettext('package_')+'.mapper;\n';
 	t+="import org.springframework.stereotype.Repository;\n";
-	t+="import "+gettext('package_')+'.bean.'+gettext('className')+'\n';
+	t+="import "+gettext('package_')+'.bean.'+gettext('className')+';\n';
 	t+="/**"+gettext('desc')+"\n * @author "+gettext('author')+"\n *\n */\n";
 	t+='@Repository\n';
-	t+='public class '+gettext('className')+'Dao extends BasicDao<'+gettext('className')+'> {\n\n';
-	t+='\tpublic '+gettext('className')+'Dao() {\n\t\tsuper("'+gettext('table')+'", '+gettext('className')+'.class);\n\t}\n';
+	t+='public interface '+gettext('className')+'Dao extends BasicDao<'+gettext('className')+'> {\n\n';
+	//t+='\tpublic '+gettext('className')+'Dao() {\n\t\tsuper("'+gettext('table')+'", '+gettext('className')+'.class);\n\t}\n';
 	
 	//处理findBy
 	var findby = retrievePojoObject(5);
@@ -353,7 +328,7 @@ function generateDao(){
 	t+='\n}';
 	console.log(t);
 	
-	exportFile(gettext('package_')+'.dao', gettext('className')+'Dao', 'java', t,gettext('exportPath'));
+	exportFile(gettext('package_')+'.mapper', gettext('className')+'Dao', 'java', t,gettext('exportPath'));
 	
 	return t;
 }
@@ -448,14 +423,23 @@ function geniBatisXml(){
 	laytpl($('#ibatisTpl').html()).render(data,function(html){
 		html = html.replace(/(\\n)/g,'\n');
 		console.log(html);
-		exportFile(data['package']+'.service.mapper', gettext('className')+'Mapper', 'xml', html,gettext('exportPath'));
+		exportFile(data['package']+'.mapper.xml', gettext('className')+'Mapper', 'xml', html,gettext('exportPath'));
 		
-		var mapres=(data['package']+'.service.mapper').replace(/(\.)/g, '/')+'/'+data.name+'Mapper.xml';
+		var mapres=(data['package']+'.mapper.xml').replace(/(\.)/g, '/')+'/'+data.name+'Mapper.xml';
 		console.log("mapper:<mapper resource=\""+mapres+"\"></mapper>")
 	});
 
 }
 //查询页面1.findBy,2.显示字字段，3.批量操作
+
+function genAll(){
+	generateBean();
+	generateDao();
+	generateController();
+	genInsertPage();
+	generateListPage();
+	geniBatisXml();
+}
 </script>
 </body>
 </html>

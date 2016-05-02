@@ -22,7 +22,7 @@ public class ${genparam.className }Controller extends BasicController<${genparam
 
 	@Override
 	protected String getPrefix() {
-		return PREFIX;
+		return PREFIX.toLowerCase();
 	}
 
 	@Override

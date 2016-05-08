@@ -19,7 +19,7 @@
 
 <h1 class="page-header">${remarks } - 新增</h1>
 
-<form form-ajax class="form-horizontal" id="main-form" action="/${genparam.routePath }/insert">
+<form form-ajax class="form-horizontal" id="main-form" action="/${genparam.routePath }/insert" forward="/${genparam.routePath }/">
 
 <c:forEach items="${columns }" var="i">
 <div class="col-sm-6">

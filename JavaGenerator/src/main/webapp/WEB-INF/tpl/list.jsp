@@ -16,9 +16,12 @@
 
 <h1 class="page-header">${remarks } - 查看</h1>
 
-<form class="form-inline">
+<!-- <form class="form-inline">
 <button type="submit" class="btn btn-default">查找</button>
-</form><table class="table table-striped">
+</form> -->
+
+<a href="building/insert" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;添加</a>
+<table class="table table-striped">
 <tr>
 	<th><input type="checkbox" onchange="toggleSelectAll(this,$('[name=selectRow]'));"/></th>
 	
@@ -36,7 +39,10 @@
 		<c:if test="${i.javaType != 'java.util.Date' }">&lt;c:out value="&#36;{i.${i.columnName }}">&lt;/c:out></c:if>
 	</td>
 	</c:forEach>
-	<td><button class="btn btn-xs btn-link" onclick="del(&#36;{i.id})">删除</button></td>
+	<td>
+		<a class="btn btn-xs btn-link" href="/${genparam.routePath }/detail/&#36;{i.id }">查看详情</a>
+		<button class="btn btn-xs btn-link" onclick="del(&#36;{i.id})">删除</button>
+	</td>
 </tr>
 &lt;/c:forEach>
 </table>

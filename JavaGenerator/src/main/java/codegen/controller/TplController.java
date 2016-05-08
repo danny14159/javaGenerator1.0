@@ -70,4 +70,20 @@ public class TplController {
 		
 		return "tpl/login";
 	}
+	
+	@RequestMapping("/detail")
+	public String detailPage(Model model) throws Exception{
+		
+		GenParam param = MainController.getParam(request);
+		helper.initParam(param);
+		
+		if(Strings.isNotBlank(param.getTable())){
+			
+			DataBaseTable table= helper.getTable(param.getTable());
+			model.addAttribute("columns", table.getColumnList());
+			model.addAttribute("remarks", table.getTableComment());
+		}
+		
+		return "tpl/detail";
+	}
 }

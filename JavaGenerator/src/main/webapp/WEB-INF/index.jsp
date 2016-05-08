@@ -85,6 +85,7 @@ s{color:red;font-weight: bold;text-decoration: none;margin: 3px;}
 		<!-- <button type="button" class="btn btn-default btn-xs" onclick="generateDao();">生成controller</button> -->
 		<button type="button" class="btn btn-info btn-xs" onclick="genInsertPage()">生成添加页面</button>
 		<button type="button" class="btn btn-info btn-xs" onclick="generateListPage()">生成查询页面</button>
+		<button type="button" class="btn btn-info btn-xs" onclick="generateDetailPage()">生成详情页面</button>
 		<button type="button" class="btn btn-info btn-xs">生成修改页面</button>
 		<button type="button" class="btn btn-default btn-xs" onclick="geniBatisXml();">生成ibatis XML文件</button>
 		<button type="button" class="btn btn-default btn-xs" onclick="genAll();">生成全套</button>
@@ -227,7 +228,8 @@ function exportFile(pkg,name,filetype,text,outpath){
 	//处理转义
 	t = t.replaceAll('&lt;','<');
 	t = t.replaceAll('&gt;','>');
-	t = t.replaceAll('&amp;','$');
+	t = t.replaceAll('&amp;','$');  //历史原因
+	t = t.replaceAll('&#36;','$');
 	
 	/*利用activeX向本地输出文件*/
 	var packs=pkg.replace(/(\.)/g, '\\');
@@ -430,6 +432,12 @@ function geniBatisXml(){
 	});
 
 }
+function generateDetailPage(){
+	$.get('tpl/detail',function(data){
+		console.log(data);		
+		exportFile(gettext('package_')+'.front.'+firstCharToLowerCase(gettext('className')), 'detail','jsp', data,gettext('exportPath'));
+	},'html');
+}
 //查询页面1.findBy,2.显示字字段，3.批量操作
 
 function genAll(){
@@ -438,6 +446,7 @@ function genAll(){
 	generateController();
 	genInsertPage();
 	generateListPage();
+	generateDetailPage();
 	geniBatisXml();
 }
 </script>

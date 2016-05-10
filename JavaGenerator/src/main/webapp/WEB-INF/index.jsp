@@ -86,7 +86,7 @@ s{color:red;font-weight: bold;text-decoration: none;margin: 3px;}
 		<button type="button" class="btn btn-info btn-xs" onclick="genInsertPage()">生成添加页面</button>
 		<button type="button" class="btn btn-info btn-xs" onclick="generateListPage()">生成查询页面</button>
 		<button type="button" class="btn btn-info btn-xs" onclick="generateDetailPage()">生成详情页面</button>
-		<button type="button" class="btn btn-info btn-xs">生成修改页面</button>
+		<button type="button" class="btn btn-info btn-xs" onclick="generateUpdatePage()">生成修改页面</button>
 		<button type="button" class="btn btn-default btn-xs" onclick="geniBatisXml();">生成ibatis XML文件</button>
 		<button type="button" class="btn btn-default btn-xs" onclick="genAll();">生成全套</button>
 	</div>
@@ -375,6 +375,13 @@ function genInsertPage(){
 	},'html');
 }
 
+function generateUpdatePage(){
+	$.get('tpl/update',function(data){
+		console.log(data);		
+		exportFile(gettext('package_')+'.front.'+firstCharToLowerCase(gettext('className')), 'update','jsp', data,gettext('exportPath'));
+	},'html');
+}
+
 function geniBatisXml(){
 	//$('#namespace').val(gettext('package')+'.service.'+gettext('name')+'Service');
 	
@@ -446,6 +453,7 @@ function genAll(){
 	generateController();
 	genInsertPage();
 	generateListPage();
+	generateUpdatePage();
 	generateDetailPage();
 	geniBatisXml();
 }

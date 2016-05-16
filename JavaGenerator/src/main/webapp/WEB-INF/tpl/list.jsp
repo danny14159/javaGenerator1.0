@@ -41,6 +41,7 @@
 	</c:forEach>
 	<td>
 		<a class="btn btn-xs btn-link" href="/${genparam.routePath }/detail/&#36;{i.id }">查看详情</a>
+		<a class="btn btn-xs btn-link" href="/${genparam.routePath }/update/&#36;{i.id }">修改</a>
 		<button class="btn btn-xs btn-link" onclick="del(&#36;{i.id})">删除</button>
 	</td>
 </tr>

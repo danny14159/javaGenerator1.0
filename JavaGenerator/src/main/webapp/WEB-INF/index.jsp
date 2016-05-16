@@ -159,9 +159,6 @@ String.prototype.replaceAll = function(reallyDo, replaceWith, ignoreCase) {
 		</set>\n
 		<where>\n
 			{{d.pk}}\n
-			{{# for(var i = 0,len=d.updateCon.length;i<len;i++){ }}
-				<if test="{{d.updateCon[i]}}!=null">and {{d.updateCon[i]}}=#{ {{d.updateCon[i]}} }</if>\n
-			{{# } }}
 		</where>\n
 	</update>\n
 	<select id="list" resultType="{{d.name}}" parameterType="{{d.name}}">\n

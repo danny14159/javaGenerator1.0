@@ -5,6 +5,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -167,6 +168,7 @@ public class DbHelper {
 			case 3:case -5:result = "java.math.BigInteger";break;
 			case 6:result = "Float";break;
 			case 91:case 92:case 93:result="java.util.Date";break;
+			case Types.LONGVARBINARY:result="java.io.InputStream";break;
 			default: result = "String";
 		}
 		return result;

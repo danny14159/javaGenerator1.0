@@ -7,7 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import codegen.bean.GenParam;
 import codegen.utils.bean.DataBaseColumn;
@@ -141,6 +143,12 @@ public class DbHelper {
 		
 		ResultSet rs = databaseMetaData.getColumns(null, "%", tableName, "%");
 		
+		ResultSet rsPrimaryKeys = databaseMetaData.getPrimaryKeys(null, null, tableName);
+		Set<String> PrimaryKeys = new HashSet<>();
+		while(rsPrimaryKeys.next()){
+			PrimaryKeys.add(rsPrimaryKeys.getString("COLUMN_NAME"));
+		}
+		
 		while(rs.next()){
 			DataBaseColumn column = new DataBaseColumn();
 			column.setColumnComment(rs.getString("REMARKS"));
@@ -148,6 +156,8 @@ public class DbHelper {
 			column.setSqlType(rs.getInt("DATA_TYPE"));
 			column.setSqlTypeName(rs.getString("TYPE_NAME"));
 			column.setJavaType(getJavaType(column.getSqlType()));
+			column.setColumnSize(rs.getInt("COLUMN_SIZE"));
+			column.setIsPK(PrimaryKeys.contains(column.getColumnName()));
 			list.add(column);
 		}
 		

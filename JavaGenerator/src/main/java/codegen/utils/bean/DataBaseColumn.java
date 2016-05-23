@@ -16,7 +16,27 @@ public class DataBaseColumn {
 	
 	private String sqlTypeName;
 	
+	private int columnSize;
+	
+	public int getColumnSize() {
+		return columnSize;
+	}
+
+	public void setColumnSize(int columnSize) {
+		this.columnSize = columnSize;
+	}
+
 	private String javaType;
+	
+	private Boolean isPK;
+
+	public Boolean getIsPK() {
+		return isPK;
+	}
+
+	public void setIsPK(Boolean isPK) {
+		this.isPK = isPK;
+	}
 
 	public String getColumnName() {
 		return columnName;

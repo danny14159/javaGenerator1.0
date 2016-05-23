@@ -98,6 +98,7 @@ s{color:red;font-weight: bold;text-decoration: none;margin: 3px;}
 				<th width="15%">字段类型</th>
 				<th width="10%">java类型</th>
 				<th>字段注释</th>
+				<th>是否主键</th>
 				<th width="10%"><input type="checkbox" onchange="toggleSelectAll(this,$('[name=selectFieldShow]'));" checked="checked"/>显示</th>
 				<th width="10%"><input type="checkbox" onchange="toggleSelectAll(this,$('[name=selectFieldFindby]'));"/>查找</th>
 				<th width="10%"><input type="checkbox" onchange="toggleSelectAll(this,$('[name=selectFieldAdd]'));" checked="checked"/>插入</th>
@@ -106,10 +107,13 @@ s{color:red;font-weight: bold;text-decoration: none;margin: 3px;}
 		<tbody>
 			<c:forEach items="${columns }" var="i">
 			<tr>
-				<td>${i.columnName }</th>
-				<td>[${i.sqlType}]<span>${i.sqlTypeName }</span></th>
-				<td>${i.javaType }</th>
-				<td>${i.columnComment }</th>
+				<td>${i.columnName }</td>
+				<td>[${i.sqlType}]<span>${i.sqlTypeName }</span>(${i.columnSize })</td>
+				<td>${i.javaType }</td>
+				<td>${i.columnComment }</td>
+				<td>${i.isPK?'是':'否' }
+				
+				</td>
 				<td><input type="checkbox" checked="checked" name="selectFieldShow"/></td>
 				<td><input type="checkbox" name="selectFieldFindby"/></td>
 				<td><input type="checkbox" checked="checked" name="selectFieldAdd"/></td>
@@ -203,16 +207,16 @@ String.prototype.replaceAll = function(reallyDo, replaceWith, ignoreCase) {
 package {{package}};
 </script>
 <script type="text/javascript">
-$(function(){
-/* 	$('#main').submit(function(){
+/* $(function(){
+ 	$('#main').submit(function(){
 		$(this).find('.required').each(function(){
 			if(!$(this).val()){
 				alert($(this).prev().html()+'不能为空');
 				return false;
 			}
 		});
-	}); */
-})
+	}); 
+}) */
 function gettext(id){
 	var ret = $('#'+id).val();
 	ret = ret || $('[name='+id+']').val();
